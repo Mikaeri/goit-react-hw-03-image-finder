@@ -2,10 +2,12 @@ import React from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { getData } from 'services/getData';
 import { ToastContainer, toast } from 'react-toastify';
-import { gettingProperties } from './utilites/gettingProperties';
+import { gettingProperties } from '../utilites/gettingProperties';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
+import PropTypes from 'prop-types';
+import '../components/styles.css';
 
 export class App extends React.Component {
   abortCtrl;
@@ -102,3 +104,10 @@ export class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  images: PropTypes.array,
+  isLoading: PropTypes.bool,
+  error: PropTypes.string,
+  isLastPage: PropTypes.bool,
+};
