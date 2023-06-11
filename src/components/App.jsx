@@ -6,7 +6,6 @@ import { gettingProperties } from '../utilites/gettingProperties';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
-import PropTypes from 'prop-types';
 import '../components/styles.css';
 
 export class App extends React.Component {
@@ -53,7 +52,7 @@ export class App extends React.Component {
         this.abortCtrl.signal
       );
 
-      if (data.hits.length === 0) {
+      if (data.length === 0) {
         return toast.info('Sorry, no images for your query...', {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -67,7 +66,7 @@ export class App extends React.Component {
         });
       }
 
-      const normalizedHits = gettingProperties(data.hits);
+      const normalizedHits = gettingProperties(data);
 
       this.setState(prevState => ({
         images: [...prevState.images, ...normalizedHits],
@@ -104,10 +103,3 @@ export class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  images: PropTypes.array,
-  isLoading: PropTypes.bool,
-  error: PropTypes.string,
-  isLastPage: PropTypes.bool,
-};
