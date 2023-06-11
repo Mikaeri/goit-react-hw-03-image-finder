@@ -2,11 +2,13 @@ import React from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { getData } from 'services/getData';
 import { ToastContainer, toast } from 'react-toastify';
-import { gettingProperties } from '../utilites/gettingProperties';
+
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
+
 import '../components/styles.css';
+import { gettingProperties } from 'utilites/gettingProperties';
 
 export class App extends React.Component {
   abortCtrl;
@@ -19,6 +21,15 @@ export class App extends React.Component {
     isLoading: false,
     isLastPage: false,
   };
+
+  componentDidUpdate(_, prevState) {
+    if (
+      prevState.initialValue !== this.state.initialValue ||
+      prevState.currentPage !== this.state.currentPage
+    ) {
+      this.getImages();
+    }
+  }
 
   handleSubmit = query => {
     if (this.state.initialValue === query) {
@@ -52,7 +63,7 @@ export class App extends React.Component {
         this.abortCtrl.signal
       );
 
-      if (data.length === 0) {
+      if (data.hits.length === 0) {
         return toast.info('Sorry, no images for your query...', {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -66,12 +77,12 @@ export class App extends React.Component {
         });
       }
 
-      const normalizedHits = gettingProperties(data);
+      const normalizedHits = gettingProperties(data.hits);
 
       this.setState(prevState => ({
         images: [...prevState.images, ...normalizedHits],
         isLastPage:
-          prevState.images.length + normalizedHits.length >= data.totalHits,
+          prevState.images.length + normalizedHits.length >= data.total,
         error: null,
       }));
     } catch (error) {
