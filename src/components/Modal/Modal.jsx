@@ -1,6 +1,7 @@
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { ModalWindow } from './ModalStyles';
 
 const customStyles = {
   overlay: {
@@ -31,7 +32,7 @@ ReactModal.setAppElement('#root');
 
 export const Modal = ({ isOpen, largeImageURL, tags, onClose }) => {
   return (
-    <ReactModal
+    <ModalWindow
       style={customStyles}
       isOpen={isOpen}
       onRequestClose={onClose}
@@ -39,7 +40,7 @@ export const Modal = ({ isOpen, largeImageURL, tags, onClose }) => {
       onAfterClose={() => enableBodyScroll(document)}
     >
       <img src={largeImageURL} alt={tags} />
-    </ReactModal>
+    </ModalWindow>
   );
 };
 

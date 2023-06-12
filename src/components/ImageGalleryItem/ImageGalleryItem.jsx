@@ -1,5 +1,5 @@
-import { Modal } from 'components/Modal/Modal';
 import React from 'react';
+import { GalleryItem, GalleryItemImg, Overlay } from './ImageGalleryItemStyles';
 
 export class ImageGalleryItem extends React.Component {
   state = {
@@ -19,11 +19,15 @@ export class ImageGalleryItem extends React.Component {
     } = this.props;
     return (
       <>
-        <li>
-          <img src={webformatURL} alt={tags} onClick={this.toggleModal} />
-        </li>
+        <GalleryItem>
+          <GalleryItemImg
+            src={webformatURL}
+            alt={tags}
+            onClick={this.toggleModal}
+          />
+        </GalleryItem>
         {isModalOpen && (
-          <Modal
+          <Overlay
             isOpen={isModalOpen}
             largeImageURL={largeImageURL}
             tags={tags}

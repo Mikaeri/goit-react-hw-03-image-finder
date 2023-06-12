@@ -1,14 +1,16 @@
 import React from 'react';
-import { Searchbar } from './Searchbar/Searchbar';
+import { Searchbar } from '../Searchbar/Searchbar';
 import { getData } from 'services/getData';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Loader } from './Loader/Loader';
-import { Button } from './Button/Button';
+import { ImageGallery } from '../ImageGallery/ImageGallery';
+import { Loader } from '../Loader/Loader';
+import { Button } from '../Button/Button';
 
-import '../components/styles.css';
 import { gettingProperties } from 'utilites/gettingProperties';
+import { GlobalStyles } from '../GlobalStyles';
+import { AppContainer } from './AppStyles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends React.Component {
   abortCtrl;
@@ -101,16 +103,17 @@ export class App extends React.Component {
   render() {
     const { images, isLoading, error, isLastPage } = this.state;
     return (
-      <>
-        <ToastContainer autoClose={2500} />
+      <AppContainer>
+        <GlobalStyles />
         <Searchbar onSubmit={this.handleSubmit} />
+        <ToastContainer autoClose={2500} />
         {error && <span>Error: {error}</span>}
         <ImageGallery images={images} />
         {isLoading && <Loader />}
         {!isLoading && images.length > 0 && !isLastPage && (
           <Button onClick={this.loadMore} />
         )}
-      </>
+      </AppContainer>
     );
   }
 }
